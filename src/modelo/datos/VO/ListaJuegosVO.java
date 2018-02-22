@@ -1,7 +1,7 @@
 package modelo.datos.VO;
 
 /**
- * @author usuario
+ * @author Jorge Rambla
  *
  */
 public class ListaJuegosVO {

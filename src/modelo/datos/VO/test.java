@@ -3,7 +3,7 @@ package modelo.datos.VO;
 import java.util.ArrayList;
 
 /**
- * @author usuario
+ * @author Jorge Rambla
  *
  */
 public class test {
