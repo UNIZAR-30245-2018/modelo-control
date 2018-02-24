@@ -7,12 +7,38 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import modelo.datos.VO.UsuarioVO;
 
 /**
  * @author Jorge Rambla
  *
  */
 public class UsuarioDAO {
+  public UsuarioVO getUsuario(String seudonimo, Connection conexion) {
+    UsuarioVO retVal = new UsuarioVO();
+    try {
+      String query = "SELECT * FROM usuario WHERE seudonimo = ?";
+
+      PreparedStatement ps = conexion.prepareStatement(query);
+
+      ps.setString(1, seudonimo);
+
+      ResultSet rs = ps.executeQuery();
+
+      if (!rs.first()) {
+        throw new SQLException(
+            "Error: No se ha encontrado ningun usuario con el seudonimo de " + seudonimo);
+      } else {
+        retVal = new UsuarioVO(rs.getString(1), rs.getString(2), rs.getString(3),
+            rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
+
+    return retVal;
+  }
+
   public String getSeudonimo(String email, Connection conexion) {
     String retVal = "Error";
     try {

@@ -42,6 +42,11 @@ public class LogroVO {
     this(id, nombre, null, descripcion, experiencia);
   }
 
+  /**
+   * Constructor de objeto vacio
+   */
+  public LogroVO() {};
+
   @Override
   public String toString() {
     return "LogroVO {id_logro=" + id_logro + ", nombre=" + nombre + ", imagen=" + imagen

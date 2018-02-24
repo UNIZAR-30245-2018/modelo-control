@@ -20,6 +20,11 @@ public class JuegoVO {
     this.nombre = nombre;
   }
 
+  /**
+   * Constructor del objeto vacio
+   */
+  public JuegoVO() {};
+
   @Override
   public String toString() {
     return "JuegoVO {id_juego=" + id_juego + ", nombre=" + nombre + "}";

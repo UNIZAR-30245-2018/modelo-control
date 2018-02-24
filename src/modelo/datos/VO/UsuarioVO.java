@@ -71,6 +71,11 @@ public class UsuarioVO {
   }
 
   /**
+   * Constructor de objeto vacio
+   */
+  public UsuarioVO() {};
+
+  /**
    * @param seudonimo
    * @param nombre
    * @param email
