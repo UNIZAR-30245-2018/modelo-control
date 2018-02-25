@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import modelo.datos.VO.UsuarioVO;
 
 /**
@@ -14,6 +15,13 @@ import modelo.datos.VO.UsuarioVO;
  *
  */
 public class UsuarioDAO {
+  
+  /**
+   * @param seudonimo
+   * @param conexion
+   * @return UsuarioVO vacio si no existe ningun usuario con el seudonimo especificado <br>
+   *         UsuarioVO con el seudonimo especificado
+   */
   public UsuarioVO getUsuario(String seudonimo, Connection conexion) {
     UsuarioVO retVal = new UsuarioVO();
     try {
@@ -36,6 +44,29 @@ public class UsuarioDAO {
       e.printStackTrace(System.err);
     }
 
+    return retVal;
+  }
+
+  public ArrayList<UsuarioVO> getAllUsuario(Connection conexion) {
+    ArrayList<UsuarioVO> retVal = new ArrayList<UsuarioVO>();
+    try {
+      String query = "SELECT * from usuario";
+
+      PreparedStatement ps = conexion.prepareStatement(query);
+
+      ResultSet rs = ps.executeQuery();
+
+      if (!rs.first()) {
+        throw new SQLException("Error: No hay ningun usuario en la tabla usuario");
+      } else {
+        while (rs.next()) {
+          retVal.add(new UsuarioVO(rs.getString(1), rs.getString(2), rs.getString(3),
+              rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)));
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
     return retVal;
   }
 

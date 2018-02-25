@@ -49,6 +49,11 @@ public class PublicacionVO {
     this(id_publicacion, usuario, fecha, false, juego, texto);
   }
 
+  /**
+   * Constructor de objeto vacio
+   */
+  public PublicacionVO() {}
+
   @Override
   public String toString() {
     return "PublicacionVO {\n\tid_publicacion: " + id_publicacion + "\n\tusuario: "
