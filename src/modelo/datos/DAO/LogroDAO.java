@@ -14,6 +14,11 @@ import modelo.datos.VO.LogroVO;
  *
  */
 public class LogroDAO {
+  /**
+   * @param id_logro
+   * @param conexion
+   * @return
+   */
   public LogroVO getLogro(int id_logro, Connection conexion) {
     LogroVO retVal = new LogroVO();
 
