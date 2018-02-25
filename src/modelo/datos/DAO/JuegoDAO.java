@@ -11,6 +11,11 @@ import modelo.datos.VO.JuegoVO;
  *
  */
 public class JuegoDAO {
+  /**
+   * @param id_juego
+   * @param conexion
+   * @return
+   */
   public JuegoVO getJuego(int id_juego, Connection conexion) {
     JuegoVO retVal = new JuegoVO();
 
