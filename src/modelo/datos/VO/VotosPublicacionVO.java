@@ -19,6 +19,8 @@ public class VotosPublicacionVO {
     this.usuario = usuario;
     this.publicacion = publicacion;
   }
+  
+  public VotosPublicacionVO(){};
 
   @Override
   public String toString() {

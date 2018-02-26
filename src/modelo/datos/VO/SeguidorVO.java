@@ -20,7 +20,8 @@ public class SeguidorVO {
     this.usuario_seguido = usuario_seguido;
   }
 
-
+  public SeguidorVO(){};
+  
   @Override
   public int hashCode() {
     final int prime = 31;

@@ -20,6 +20,11 @@ public class ListaJuegosVO {
     this.usuario = usuario;
   }
 
+  /*Constructor vacío*/
+  public ListaJuegosVO(){};
+  
+  
+  
   @Override
   public String toString() {
     return "ListaJuegosVO {usuario=" + usuario + ", juego=" + juego + "}";
