@@ -59,10 +59,10 @@ public class UsuarioDAO {
       if (!rs.first()) {
         throw new SQLException("Error: No hay ningun usuario en la tabla usuario");
       } else {
-        while (rs.next()) {
+         do {
           retVal.add(new UsuarioVO(rs.getString(1), rs.getString(2), rs.getString(3),
               rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)));
-        }
+        }while (rs.next());
       }
     } catch (Exception e) {
       e.printStackTrace(System.err);
@@ -235,7 +235,7 @@ public class UsuarioDAO {
    * @param email
    * @param password
    * @param conexion
-   * @return true si encuentra un usuario con igual nombre y contraseña, o email y contraseña
+   * @return true si encuentra un usuario con igual nombre y contraseï¿½a, o email y contraseï¿½a
    */
   public boolean existeUsuario(String seudonimo, String email, String password,
       Connection conexion) {
