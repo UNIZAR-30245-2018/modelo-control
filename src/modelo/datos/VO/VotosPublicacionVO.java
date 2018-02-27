@@ -19,15 +19,18 @@ public class VotosPublicacionVO {
     this.usuario = usuario;
     this.publicacion = publicacion;
   }
-  
+  /**
+   * Constructor de objeto vacio
+   */
   public VotosPublicacionVO(){};
+
+  
 
   @Override
   public String toString() {
-    return "VotosPublicacionVO {usuario=" + usuario + ", publicacion=" + publicacion
-        + "}";
+    return "VotosPublicacionVO {\n\tusuario: " + usuario + "\n\tpublicacion: "
+        + publicacion + "\n}";
   }
-
   @Override
   public int hashCode() {
     final int prime = 31;

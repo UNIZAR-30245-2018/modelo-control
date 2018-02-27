@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import modelo.datos.VO.ListaJuegosVO;
 import modelo.datos.VO.LogroConseguidoVO;
 
 /**
@@ -34,10 +33,9 @@ public class LogroConseguidoDAO {
 
 		      if (!rs.first()) {
 		        throw new SQLException(
-		            "Error: No se ha encontrado ning�n juego completado al usuario " + user);
+		            "Error: No se ha encontrado ningun juego completado al usuario " + user);
 		      } else {
 		    	  while (rs.next()) {
-		    		  
 		              String usuario = rs.getString("usuario");
 		              int juego = rs.getInt("juego");
 		              retVal.add(new LogroConseguidoVO(usuario,juego));

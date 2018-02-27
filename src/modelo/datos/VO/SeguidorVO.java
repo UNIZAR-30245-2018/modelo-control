@@ -19,9 +19,16 @@ public class SeguidorVO {
     this.usuario = usuario;
     this.usuario_seguido = usuario_seguido;
   }
-
+/**
+ * Constructor de objeto vacio
+ */
   public SeguidorVO(){};
   
+  @Override
+public String toString() {
+  return "SeguidorVO {\n\tusuario: " + usuario + "\n\tusuario_seguido: " + usuario_seguido
+      + "\n}";
+}
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -61,25 +68,6 @@ public class SeguidorVO {
     }
     return true;
   }
-
-  @Override
-  public String toString() {
-    StringBuilder builder = new StringBuilder();
-    builder.append(getClass().getName());
-    builder.append(" {\n\t");
-    if (usuario != null) {
-      builder.append("usuario: ");
-      builder.append(usuario);
-      builder.append("\n\t");
-    }
-    if (usuario_seguido != null) {
-      builder.append("usuario_seguido: ");
-      builder.append(usuario_seguido);
-    }
-    builder.append("\n}");
-    return builder.toString();
-  }
-
 
   public String getUsuario() {
     return usuario;

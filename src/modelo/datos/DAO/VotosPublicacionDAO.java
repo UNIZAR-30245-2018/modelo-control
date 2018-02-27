@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import modelo.datos.VO.SeguidorVO;
 import modelo.datos.VO.VotosPublicacionVO;
 
 /**

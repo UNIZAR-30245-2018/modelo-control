@@ -18,7 +18,7 @@ import modelo.datos.VO.ListaJuegosVO;
 public class ListaJuegosDAO {
 	
 	
-	/*Método que saca todos los juegos completados de un usuario */
+	/*MÃ©todo que saca todos los juegos completados de un usuario */
 	public ArrayList<ListaJuegosVO> getCompletadosByUser(String user, Connection conexion) {
 		ArrayList<ListaJuegosVO> retVal = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class ListaJuegosDAO {
 
 	      if (!rs.first()) {
 	        throw new SQLException(
-	            "Error: No se ha encontrado ningún juego completado al usuario " + user);
+	            "Error: No se ha encontrado ningÃºn juego completado al usuario " + user);
 	      } else {
 	    	  while (rs.next()) {
 	    		  
@@ -51,7 +51,7 @@ public class ListaJuegosDAO {
 		
 	}
 
-	/*Método que saca todos los juegos en curso de un usuario */
+	/*MÃ©todo que saca todos los juegos en curso de un usuario */
 	public ArrayList<ListaJuegosVO> getEnCursoByUser(String user, Connection conexion) {
 		ArrayList<ListaJuegosVO> retVal = new ArrayList<>();
 
@@ -67,7 +67,7 @@ public class ListaJuegosDAO {
 
 	      if (!rs.first()) {
 	        throw new SQLException(
-	            "Error: No se ha encontrado ningún juego en curso al usuario " + user);
+	            "Error: No se ha encontrado ningÃºn juego en curso al usuario " + user);
 	      } else {
 	    	  while (rs.next()) {
 	    		  
@@ -84,7 +84,7 @@ public class ListaJuegosDAO {
 		
 	}
 
-	/*Método que saca todos los juegos de un usuario de un usuario */
+	/*MÃ©todo que saca todos los juegos de un usuario de un usuario */
 	public ArrayList<ListaJuegosVO> getPendientesByUser(String user, Connection conexion) {
 		ArrayList<ListaJuegosVO> retVal = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class ListaJuegosDAO {
 
 	      if (!rs.first()) {
 	        throw new SQLException(
-	            "Error: No se ha encontrado ningún juego pendiente al usuario " + user);
+	            "Error: No se ha encontrado ningÃºn juego pendiente al usuario " + user);
 	      } else {
 	    	  while (rs.next()) {
 	    		  
@@ -117,7 +117,7 @@ public class ListaJuegosDAO {
 		
 	}
 
-	/*Método que saca todos los juegos de un usuario, incluyendo las 3 listas*/
+	/*MÃ©todo que saca todos los juegos de un usuario, incluyendo las 3 listas*/
 	public ArrayList<ListaJuegosVO> getListaByUser(String user, Connection conexion) {
 		ArrayList<ListaJuegosVO> retVal = new ArrayList<>();
 

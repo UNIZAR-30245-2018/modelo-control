@@ -5,7 +5,7 @@ package modelo.datos.VO;
  *
  */
 public class LogroVO {
-  private int id_logro;
+  private String id_logro;
   private String nombre;
   private String imagen;
   private String descripcion;
@@ -20,7 +20,7 @@ public class LogroVO {
    * 
    *        Construye el objeto Logro con TODOS los valores
    */
-  public LogroVO(int id_logro, String nombre, String imagen, String descripcion,
+  public LogroVO(String id_logro, String nombre, String imagen, String descripcion,
       int experiencia) {
     super();
     this.id_logro = id_logro;
@@ -38,7 +38,7 @@ public class LogroVO {
    * 
    *        Construye el objeto Logro con el valor de imagen por defecto
    */
-  public LogroVO(int id, String nombre, String descripcion, int experiencia) {
+  public LogroVO(String id, String nombre, String descripcion, int experiencia) {
     this(id, nombre, null, descripcion, experiencia);
   }
 
@@ -49,8 +49,9 @@ public class LogroVO {
 
   @Override
   public String toString() {
-    return "LogroVO {id_logro=" + id_logro + ", nombre=" + nombre + ", imagen=" + imagen
-        + ", descripcion=" + descripcion + ", experiencia=" + experiencia + "}";
+    return "LogroVO {\n\tid_logro: " + id_logro + "\n\tnombre: " + nombre + "\n\timagen: "
+        + imagen + "\n\tdescripcion: " + descripcion + "\n\texperiencia: " + experiencia
+        + "\n}";
   }
 
   @Override
@@ -59,7 +60,7 @@ public class LogroVO {
     int result = 1;
     result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
     result = prime * result + experiencia;
-    result = prime * result + id_logro;
+    result = prime * result + ((id_logro == null) ? 0 : id_logro.hashCode());
     result = prime * result + ((imagen == null) ? 0 : imagen.hashCode());
     result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
     return result;
@@ -87,7 +88,11 @@ public class LogroVO {
     if (experiencia != other.experiencia) {
       return false;
     }
-    if (id_logro != other.id_logro) {
+    if (id_logro == null) {
+      if (other.id_logro != null) {
+        return false;
+      }
+    } else if (!id_logro.equals(other.id_logro)) {
       return false;
     }
     if (imagen == null) {
@@ -107,11 +112,11 @@ public class LogroVO {
     return true;
   }
 
-  public int getId() {
+  public String getId() {
     return id_logro;
   }
 
-  public void setId(int id_logro) {
+  public void setId(String id_logro) {
     this.id_logro = id_logro;
   }
 

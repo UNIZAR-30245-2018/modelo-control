@@ -19,10 +19,15 @@ public class LogroConseguidoVO {
     this.usuario = usuario;
     this.logro = logro;
   }
+  
+  /**
+   * Constructor de objeto vacio
+   */
+  public LogroConseguidoVO() {}
 
   @Override
   public String toString() {
-    return "LogroConseguidoVO {usuario=" + usuario + ", logro=" + logro + "}";
+    return "LogroConseguidoVO {\n\tusuario: " + usuario + "\n\tlogro: " + logro + "\n}";
   }
 
   @Override

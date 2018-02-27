@@ -27,7 +27,7 @@ public class JuegoVO {
 
   @Override
   public String toString() {
-    return "JuegoVO {id_juego=" + id_juego + ", nombre=" + nombre + "}";
+    return "JuegoVO {\n\tid_juego: " + id_juego + "\n\tnombre: " + nombre + "\n}";
   }
 
   @Override

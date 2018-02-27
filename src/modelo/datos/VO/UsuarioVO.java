@@ -71,11 +71,6 @@ public class UsuarioVO {
   }
 
   /**
-   * Constructor de objeto vacio
-   */
-  public UsuarioVO() {};
-
-  /**
    * @param seudonimo
    * @param nombre
    * @param email
@@ -86,33 +81,22 @@ public class UsuarioVO {
     this(seudonimo, nombre, email, password, null, 0, 0);
   }
 
+
+  /**
+   * Constructor de objeto vacio
+   */
+  public UsuarioVO() {};
+
+
   @Override
   public String toString() {
-    final int maxLen = 5;
-    return "\nUsuarioVO {\n\tseudonimo: " + seudonimo + "\n\tnombre: " + nombre
-        + "\n\temail: " + email + "\n\timagen: " + imagen + "\n\tpassword: " + password
+    return "UsuarioVO {\n\tseudonimo: " + seudonimo + "\n\tnombre: " + nombre
+        + "\n\temail: " + email + "\n\tpassword: " + password + "\n\timagen: " + imagen
         + "\n\texperiencia: " + experiencia + "\n\tnivel: " + nivel + "\n\tseguidos: "
-        + (seguidos != null ? seguidos.subList(0, Math.min(seguidos.size(), maxLen))
-            : null)
-        + "\n\tjuegosPendientes: "
-        + (juegosPendientes != null
-            ? juegosPendientes.subList(0, Math.min(juegosPendientes.size(), maxLen))
-            : null)
-        + "\n\tjuegosEnCurso: "
-        + (juegosEnCurso != null
-            ? juegosEnCurso.subList(0, Math.min(juegosEnCurso.size(), maxLen)) : null)
-        + "\n\tjuegosCompletados: "
-        + (juegosCompletados != null
-            ? juegosCompletados.subList(0, Math.min(juegosCompletados.size(), maxLen))
-            : null)
-        + "\n\tlogrosConseguidos: "
-        + (logrosConseguidos != null
-            ? logrosConseguidos.subList(0, Math.min(logrosConseguidos.size(), maxLen))
-            : null)
-        + "\n\tpublicaciones: "
-        + (publicaciones != null
-            ? publicaciones.subList(0, Math.min(publicaciones.size(), maxLen)) : null)
-        + "\n}";
+        + seguidos.size() + "\n\tjuegosPendientes: " + juegosPendientes.size() + "\n\tjuegosEnCurso: "
+        + juegosEnCurso.size() + "\n\tjuegosCompletados: " + juegosCompletados.size()
+        + "\n\tlogrosConseguidos: " + logrosConseguidos.size() + "\n\tpublicaciones: "
+        + publicaciones.size() + "\n}";
   }
 
   @Override
