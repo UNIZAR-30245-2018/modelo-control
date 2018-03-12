@@ -12,7 +12,7 @@ public class LogroVO {
   private int experiencia;
 
   /**
-   * @param id
+   * @param id_logro
    * @param nombre
    * @param imagen
    * @param descripcion
