@@ -1,5 +1,3 @@
-package servlets;
-
 import modelo.datos.VO.UsuarioVO;
 import modelo.datos.WebFacade;
 
@@ -11,7 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-public class LoginServlet extends HttpServlet {
+public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -19,19 +17,22 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
-        String username = request.getParameter("username");
+        String email= request.getParameter("email");
+        String seudonimo = request.getParameter("seudonimo");
+        String name= request.getParameter("name");
         String pass = request.getParameter("password");
-        System.out.println(username + " " + pass);
-        UsuarioVO usuario = null;
         WebFacade fachada = new WebFacade();
         try {
-            usuario = fachada.buscarUsuario(username, pass);
-            if(usuario == null){
-                out.println("Mal");
+            if(fachada.existeEmail(email)){
+                response.sendRedirect("mal.html");
             }
             else{
-                out.println("Bien");
+                fachada.insertarUsuario(seudonimo, name, email, pass);
+                Cookie cookiee = new Cookie("email",email);
+				Cookie cookiep = new Cookie("password",pass);
+				response.addCookie(cookiee);
+				response.addCookie(cookiec);
+				response.sendRedirect("bien.html");
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -29,6 +29,31 @@ public class WebFacade {
 	  }
   }
 
+  public void insertarUsuario(String seudonimo, String nombre, String email, Sting password) throws SQLException {
+	  Connection conexion = null;
+	  try {
+		  conexion = GestorDeConexionesBD.getConnection();
+		  UsuarioVO usuario = new UsuarioVO(seudonimo, nombre, email, password);
+		  new UsuarioDAO().insertarUsuario(usuario, conexion);
+	  } catch (Exception e) {
+		  e.printStackTrace(System.err);
+	  } finally {
+		  conexion.close();
+	  }
+  }
+
+  public boolean existeEmail(String email) throws SQLException {
+	  Connection conexion = null;
+	  try {
+		  conexion = GestorDeConexionesBD.getConnection();
+		  return new UsuarioDAO().existeEmail(email, conexion);
+	  } catch (Exception e) {
+		  e.printStackTrace(System.err);
+	  } finally {
+		  conexion.close();
+	  }
+  }
+
   public UsuarioVO buscarUsuario(String email,String pass) throws java.sql.SQLException {
 	  Connection conexion = null;
 	  UsuarioVO devolver = null;

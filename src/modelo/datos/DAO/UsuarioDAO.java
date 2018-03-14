@@ -259,12 +259,34 @@ public class UsuarioDAO {
 				ResultSet rs = ps.executeQuery();
 
 				if (rs.first()) {
-					return true;
+					retVal = true;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
-			;
+		}
+		return retVal;
+	}
+
+	public boolean existeEmail(String email, Connection conexion) {
+		boolean retVal = false;
+
+		try {
+			if (email != null) {
+				String query = "SELECT * FROM usuario WHERE email = ?";
+
+				PreparedStatement ps = conexion.prepareStatement(query);
+
+				ps.setString(1, email);
+
+				ResultSet rs = ps.executeQuery();
+
+				if (rs.first()) {
+					retVal = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
 		}
 		return retVal;
 	}
