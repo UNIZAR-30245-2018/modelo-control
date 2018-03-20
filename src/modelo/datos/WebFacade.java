@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import modelo.datos.BD.GestorDeConexionesBD;
 import modelo.datos.DAO.JuegoDAO;
 import modelo.datos.DAO.ListaJuegosDAO;
+import modelo.datos.DAO.LogroDAO;
 import modelo.datos.DAO.UsuarioDAO;
 import modelo.datos.VO.JuegoVO;
 import modelo.datos.VO.ListaJuegosVO;
+import modelo.datos.VO.LogroVO;
 import modelo.datos.VO.UsuarioVO;
 
 /**
@@ -111,6 +113,22 @@ public class WebFacade {
 	  }
 	  return devolver;
 
+  }
+
+
+  public ArrayList<LogroVO> getLogros() throws  java.sql.SQLException{
+	  Connection conexion = null;
+	  ArrayList<LogroVO> devolver = null;
+	  try {
+		  conexion = GestorDeConexionesBD.getConnection();
+		  LogroDAO logroDAO = new LogroDAO();
+		  devolver = logroDAO.getAllLogro(conexion);
+	  } catch (Exception e) {
+		  e.printStackTrace(System.err);
+	  } finally {
+		  conexion.close();
+	  }
+	  return devolver;
   }
 
   public static void main(String[] args) throws SQLException {
