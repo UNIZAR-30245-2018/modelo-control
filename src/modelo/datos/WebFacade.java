@@ -5,10 +5,14 @@ package modelo.datos;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import modelo.datos.BD.GestorDeConexionesBD;
 import modelo.datos.DAO.JuegoDAO;
+import modelo.datos.DAO.ListaJuegosDAO;
 import modelo.datos.DAO.UsuarioDAO;
 import modelo.datos.VO.JuegoVO;
+import modelo.datos.VO.ListaJuegosVO;
 import modelo.datos.VO.UsuarioVO;
 
 /**
@@ -29,7 +33,7 @@ public class WebFacade {
 	  }
   }
 
-  public void insertarUsuario(String seudonimo, String nombre, String email, Sting password) throws SQLException {
+  public void insertarUsuario(String seudonimo, String nombre, String email, String password) throws SQLException {
 	  Connection conexion = null;
 	  try {
 		  conexion = GestorDeConexionesBD.getConnection();
@@ -44,16 +48,34 @@ public class WebFacade {
 
   public boolean existeEmail(String email) throws SQLException {
 	  Connection conexion = null;
+	  Boolean existe = false;
 	  try {
 		  conexion = GestorDeConexionesBD.getConnection();
-		  return new UsuarioDAO().existeEmail(email, conexion);
+		  existe =  new UsuarioDAO().existeEmail(email, conexion);
 	  } catch (Exception e) {
 		  e.printStackTrace(System.err);
 	  } finally {
 		  conexion.close();
 	  }
+	  return existe;
   }
 
+  public void añadirJuegosEnCursoUser(UsuarioVO user) throws SQLException {
+      Connection conexion = null;
+      try {
+          conexion = GestorDeConexionesBD.getConnection();
+          UsuarioDAO usuarioDAO = new UsuarioDAO();
+          if (user != null) {
+              //throw new SQLException("Problemas con la clave!!!!");
+              user.setJuegosEnCurso(usuarioDAO.getEnCursoByUser(user.getNombre(),conexion));
+          }
+      } catch (Exception e) {
+          e.printStackTrace(System.err);
+      } finally {
+          conexion.close();
+      }
+
+  }
   public UsuarioVO buscarUsuario(String email,String pass) throws java.sql.SQLException {
 	  Connection conexion = null;
 	  UsuarioVO devolver = null;
@@ -74,7 +96,23 @@ public class WebFacade {
 	  }
 	  return devolver;
   }
-  
+
+  public UsuarioVO getUser(String identificacion) throws java.sql.SQLException{
+	  Connection conexion = null;
+	  UsuarioVO devolver = null;
+	  try {
+		  conexion = GestorDeConexionesBD.getConnection();
+		  UsuarioDAO usuarioDAO = new UsuarioDAO();
+		  devolver = usuarioDAO.getUsuario(identificacion,conexion);
+	  } catch (Exception e) {
+		  e.printStackTrace(System.err);
+	  } finally {
+		  conexion.close();
+	  }
+	  return devolver;
+
+  }
+
   public static void main(String[] args) throws SQLException {
     
   }

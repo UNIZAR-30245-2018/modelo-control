@@ -1,7 +1,10 @@
+package control;
+
 import modelo.datos.VO.UsuarioVO;
 import modelo.datos.WebFacade;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +14,7 @@ import java.sql.SQLException;
 
 public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+            doGet(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,7 +34,7 @@ public class RegisterServlet extends HttpServlet {
                 Cookie cookiee = new Cookie("email",email);
 				Cookie cookiep = new Cookie("password",pass);
 				response.addCookie(cookiee);
-				response.addCookie(cookiec);
+				response.addCookie(cookiep);
 				response.sendRedirect("bien.html");
             }
         } catch (SQLException e) {
