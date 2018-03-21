@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import modelo.datos.VO.PublicacionVO;
 
 /**
@@ -36,7 +37,30 @@ public class PublicacionDAO {
     } catch (Exception e) {
       e.printStackTrace(System.err);
     }
+    return retVal;
+  }
 
+  public ArrayList<PublicacionVO> getAll(Connection conexion) {
+    ArrayList<PublicacionVO> retVal = new ArrayList<PublicacionVO>();
+    try {
+      String query = "SELECT * FROM publicacion";
+
+      PreparedStatement ps = conexion.prepareStatement(query);
+
+      ResultSet rs = ps.executeQuery();
+
+      if (!rs.first()) {
+      } else {
+        do {
+          retVal.add(new PublicacionVO(rs.getInt(1), rs.getString(2),
+              rs.getDate(3).toLocalDate(), (rs.getInt(4) == 0) ? false : true,
+              rs.getInt(5), rs.getString(6)));
+        } while (rs.next());
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
     return retVal;
   }
 }
+

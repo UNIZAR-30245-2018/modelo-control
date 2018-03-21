@@ -6,7 +6,7 @@ package modelo.datos.VO;
  */
 public class LogroConseguidoVO {
   private String usuario;
-  private int logro;
+  private String logro;
 
   /**
    * @param usuario
@@ -14,7 +14,7 @@ public class LogroConseguidoVO {
    * 
    *        Construye el objeto LogroConseguido con TODOS los parametros
    */
-  public LogroConseguidoVO(String usuario, int logro) {
+  public LogroConseguidoVO(String usuario, String logro) {
     super();
     this.usuario = usuario;
     this.logro = logro;
@@ -29,12 +29,16 @@ public class LogroConseguidoVO {
   public String toString() {
     return "LogroConseguidoVO {\n\tusuario: " + usuario + "\n\tlogro: " + logro + "\n}";
   }
+  
+  public String toSQLInsert() {
+    return "INSERT INTO logroConseguido (usuario, id_logro) VALUES (\"" + usuario + "\", \"" + logro + "\");";
+  }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + logro;
+    result = prime * result + ((logro == null) ? 0 : logro.hashCode());
     result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
     return result;
   }
@@ -51,7 +55,11 @@ public class LogroConseguidoVO {
       return false;
     }
     LogroConseguidoVO other = (LogroConseguidoVO) obj;
-    if (logro != other.logro) {
+    if (logro == null) {
+      if (other.logro != null) {
+        return false;
+      }
+    } else if (!logro.equals(other.logro)) {
       return false;
     }
     if (usuario == null) {
@@ -72,11 +80,11 @@ public class LogroConseguidoVO {
     this.usuario = usuario;
   }
 
-  public int getLogro() {
+  public String getLogro() {
     return logro;
   }
 
-  public void setLogro(int logro) {
+  public void setLogro(String logro) {
     this.logro = logro;
   }
 

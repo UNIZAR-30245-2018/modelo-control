@@ -93,10 +93,16 @@ public class UsuarioVO {
     return "UsuarioVO {\n\tseudonimo: " + seudonimo + "\n\tnombre: " + nombre
         + "\n\temail: " + email + "\n\tpassword: " + password + "\n\timagen: " + imagen
         + "\n\texperiencia: " + experiencia + "\n\tnivel: " + nivel + "\n\tseguidos: "
-        + seguidos.size() + "\n\tjuegosPendientes: " + juegosPendientes.size() + "\n\tjuegosEnCurso: "
-        + juegosEnCurso.size() + "\n\tjuegosCompletados: " + juegosCompletados.size()
-        + "\n\tlogrosConseguidos: " + logrosConseguidos.size() + "\n\tpublicaciones: "
-        + publicaciones.size() + "\n}";
+        + seguidos.size() + "\n\tjuegosPendientes: " + juegosPendientes.size()
+        + "\n\tjuegosEnCurso: " + juegosEnCurso.size() + "\n\tjuegosCompletados: "
+        + juegosCompletados.size() + "\n\tlogrosConseguidos: " + logrosConseguidos.size()
+        + "\n\tpublicaciones: " + publicaciones.size() + "\n}";
+  }
+
+  public String toSQLInsert() {
+    return "INSERT INTO usuario (seudonimo, nombre, email, password, imagen, experiencia, nivel) VALUES (\""
+        + seudonimo + "\", \"" + nombre + "\", \"" + email + "\", \"" + password
+        + "\", \"" + imagen + "\", " + experiencia + ", " + nivel + ");";
   }
 
   @Override

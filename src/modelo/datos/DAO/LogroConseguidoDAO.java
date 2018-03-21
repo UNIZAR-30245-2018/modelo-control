@@ -19,7 +19,7 @@ public class LogroConseguidoDAO {
 
 		/*M�todo que saca todos los logros conseguidos de un usuario */
 		public ArrayList<LogroConseguidoVO> getCompletadosByUser(String user, Connection conexion) {
-			ArrayList<LogroConseguidoVO> retVal = new ArrayList<>();
+			ArrayList<LogroConseguidoVO> retVal = new ArrayList<LogroConseguidoVO>();
 
 		    try {
 		      String query = "SELECT * FROM logroConseguido WHERE usuario = ?";
@@ -35,11 +35,33 @@ public class LogroConseguidoDAO {
 		        throw new SQLException(
 		            "Error: No se ha encontrado ningun juego completado al usuario " + user);
 		      } else {
-		    	  while (rs.next()) {
-		              String usuario = rs.getString("usuario");
-		              int juego = rs.getInt("juego");
-		              retVal.add(new LogroConseguidoVO(usuario,juego));
-		          }
+		    	  do {
+		              retVal.add(new LogroConseguidoVO(rs.getString(1),rs.getString(2)));
+		          } while (rs.next());
+		      }
+		    } catch (Exception e) {
+		      e.printStackTrace(System.err);
+		    }
+
+		    return retVal;
+			
+		}
+		
+		public ArrayList<LogroConseguidoVO> getAll (Connection conexion) {
+			ArrayList<LogroConseguidoVO> retVal = new ArrayList<LogroConseguidoVO>();
+
+		    try {
+		      String query = "SELECT * FROM logroConseguido";
+
+		      PreparedStatement ps= conexion.prepareStatement(query);
+
+		      ResultSet rs = ps.executeQuery();
+
+		      if (!rs.first()) {
+		      } else {
+		    	  do {
+		              retVal.add(new LogroConseguidoVO(rs.getString(1),rs.getString(2)));
+		          } while (rs.next());
 		      }
 		    } catch (Exception e) {
 		      e.printStackTrace(System.err);

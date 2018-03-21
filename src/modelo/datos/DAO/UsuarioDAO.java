@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import modelo.datos.VO.JuegoVO;
-import modelo.datos.VO.ListaJuegosVO;
 import modelo.datos.VO.UsuarioVO;
 
 /**

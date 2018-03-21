@@ -37,14 +37,15 @@ public class LogroDAO {
             "Error: No se ha encontrado ningun logro con el id: " + id_logro);
       } else {
         retVal = new LogroVO(rs.getString(1), rs.getString(2), rs.getString(3),
-            rs.getString(4), rs.getInt(5));
+            rs.getString(4), rs.getString(5), rs.getInt(6),
+            (rs.getInt(7) == 0) ? false : true);
       }
     } catch (Exception e) {
       e.printStackTrace(System.err);
     }
     return retVal;
   }
-  
+
   public ArrayList<LogroVO> getAllLogro(Connection conexion) {
     ArrayList<LogroVO> retVal = new ArrayList<LogroVO>();
     try {
@@ -58,7 +59,9 @@ public class LogroDAO {
         throw new SQLException("Error: No hay ningun usuario en la tabla usuario");
       } else {
         do {
-          retVal.add(new LogroVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+          retVal.add(new LogroVO(rs.getString(1), rs.getString(2), rs.getString(3),
+              rs.getString(4), rs.getString(5), rs.getInt(6),
+              (rs.getInt(7) == 0) ? false : true));
         } while (rs.next());
       }
     } catch (Exception e) {
