@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-public class verPerfilServlet extends HttpServlet {
+public class VerPerfilServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -27,7 +27,7 @@ public class verPerfilServlet extends HttpServlet {
         try {
             UsuarioVO usuarioVO = fachada.getUser(user);
             request.setAttribute("user",usuarioVO);
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("verPerfil.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/verPerfil.jsp");
             rd.forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
