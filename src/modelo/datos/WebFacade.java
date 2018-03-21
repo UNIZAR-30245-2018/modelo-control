@@ -122,7 +122,7 @@ public class WebFacade {
     try {
       conexion = GestorDeConexionesBD.getConnection();
       LogroDAO logroDAO = new LogroDAO();
-      devolver = logroDAO.getAllLogro(conexion);
+      devolver = logroDAO.getAll(conexion);
     } catch (Exception e) {
       e.printStackTrace(System.err);
     } finally {

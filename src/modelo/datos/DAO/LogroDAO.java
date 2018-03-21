@@ -46,7 +46,7 @@ public class LogroDAO {
     return retVal;
   }
 
-  public ArrayList<LogroVO> getAllLogro(Connection conexion) {
+  public ArrayList<LogroVO> getAll(Connection conexion) {
     ArrayList<LogroVO> retVal = new ArrayList<LogroVO>();
     try {
       String query = "SELECT * from logro";

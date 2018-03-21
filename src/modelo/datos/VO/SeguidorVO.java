@@ -19,16 +19,23 @@ public class SeguidorVO {
     this.usuario = usuario;
     this.usuario_seguido = usuario_seguido;
   }
-/**
- * Constructor de objeto vacio
- */
-  public SeguidorVO(){};
-  
+
+  /**
+   * Constructor de objeto vacio
+   */
+  public SeguidorVO() {};
+
   @Override
-public String toString() {
-  return "SeguidorVO {\n\tusuario: " + usuario + "\n\tusuario_seguido: " + usuario_seguido
-      + "\n}";
-}
+  public String toString() {
+    return "SeguidorVO {\n\tusuario: " + usuario + "\n\tusuario_seguido: "
+        + usuario_seguido + "\n}";
+  }
+
+  public String toSQLInsert() {
+    return "INSERT INTO seguidor (usuario, usuario_seguido) VALUES (\"" + usuario
+        + "\", \"" + usuario_seguido + "\");";
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;

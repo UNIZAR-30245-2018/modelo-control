@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import modelo.datos.VO.VotosPublicacionVO;
 
 /**
@@ -16,58 +15,83 @@ import modelo.datos.VO.VotosPublicacionVO;
  *
  */
 public class VotosPublicacionDAO {
-	public ArrayList<VotosPublicacionVO> getVotosPorUsuario(String user, Connection conexion) {
-		 ArrayList<VotosPublicacionVO> retVal = new ArrayList<VotosPublicacionVO>();
+  public ArrayList<VotosPublicacionVO> getVotosPorUsuario(String user,
+      Connection conexion) {
+    ArrayList<VotosPublicacionVO> retVal = new ArrayList<VotosPublicacionVO>();
 
-		    try {
-		      String query = "SELECT * FROM votosPublicacion WHERE usuario = ?";
+    try {
+      String query = "SELECT * FROM votosPublicacion WHERE usuario = ?";
 
-		      PreparedStatement ps = conexion.prepareStatement(query);
+      PreparedStatement ps = conexion.prepareStatement(query);
 
-		      ps.setString(1, user);
+      ps.setString(1, user);
 
-		      ResultSet rs = ps.executeQuery();
+      ResultSet rs = ps.executeQuery();
 
-		      if (!rs.first()) {
-		        throw new SQLException(
-		            "Error: No se ha encontrado ningun usuario de nombre " + user);
-		      } else {
-		    	 while(rs.next()){
-		    		 	retVal.add(new VotosPublicacionVO(rs.getString(1), rs.getInt(2)));
-		    	 }
-		      }
-		    } catch (Exception e) {
-		      e.printStackTrace(System.err);
-		    }
+      if (!rs.first()) {
+        throw new SQLException(
+            "Error: No se ha encontrado ningun usuario de nombre " + user);
+      } else {
+        do {
+          retVal.add(new VotosPublicacionVO(rs.getString(1), rs.getInt(2)));
+        } while (rs.next());
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
 
-		    return retVal;
-		  }
-	
-	public ArrayList<VotosPublicacionVO> getVotosPorPublicacion(int id_pub, Connection conexion) {
-		 ArrayList<VotosPublicacionVO> retVal = new ArrayList<VotosPublicacionVO>();
+    return retVal;
+  }
 
-		    try {
-		      String query = "SELECT * FROM votosPublicacion WHERE id_publicacion = ?";
+  public ArrayList<VotosPublicacionVO> getVotosPorPublicacion(int id_pub,
+      Connection conexion) {
+    ArrayList<VotosPublicacionVO> retVal = new ArrayList<VotosPublicacionVO>();
 
-		      PreparedStatement ps = conexion.prepareStatement(query);
+    try {
+      String query = "SELECT * FROM votosPublicacion WHERE id_publicacion = ?";
 
-		      ps.setInt(1, id_pub);
+      PreparedStatement ps = conexion.prepareStatement(query);
 
-		      ResultSet rs = ps.executeQuery();
+      ps.setInt(1, id_pub);
 
-		      if (!rs.first()) {
-		        throw new SQLException(
-		            "Error: No se ha encontrado ninguna publicacion con un id: " + id_pub);
-		      } else {
-		    	 while(rs.next()){
-		    		 	retVal.add(new VotosPublicacionVO(rs.getString(1), rs.getInt(2)));
-		    	 }
-		      }
-		    } catch (Exception e) {
-		      e.printStackTrace(System.err);
-		    }
+      ResultSet rs = ps.executeQuery();
 
-		    return retVal;
-		  }
-	
+      if (!rs.first()) {
+        throw new SQLException(
+            "Error: No se ha encontrado ninguna publicacion con un id: " + id_pub);
+      } else {
+        do {
+          retVal.add(new VotosPublicacionVO(rs.getString(1), rs.getInt(2)));
+        } while (rs.next());
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
+
+    return retVal;
+  }
+
+  public ArrayList<VotosPublicacionVO> getAll(Connection conexion) {
+    ArrayList<VotosPublicacionVO> retVal = new ArrayList<VotosPublicacionVO>();
+
+    try {
+      String query = "SELECT * FROM votosPublicacion";
+
+      PreparedStatement ps = conexion.prepareStatement(query);
+
+      ResultSet rs = ps.executeQuery();
+
+      if (!rs.first()) {
+      } else {
+        do {
+          retVal.add(new VotosPublicacionVO(rs.getString(1), rs.getInt(2)));
+        } while (rs.next());
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
+
+    return retVal;
+  }
+
 }
