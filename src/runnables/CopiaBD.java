@@ -217,8 +217,10 @@ public class CopiaBD {
             }
             break;
           case "-form":
+            if(args.length-(p+1)>0){
             if (args[++p].toLowerCase().equals("json")) {
               formato = "json";
+            }
             }
             break;
           case "-c":
