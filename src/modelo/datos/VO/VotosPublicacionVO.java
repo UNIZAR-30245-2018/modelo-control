@@ -1,5 +1,7 @@
 package modelo.datos.VO;
 
+import java.time.LocalDate;
+
 /**
  * @author Jorge Rambla
  *
@@ -7,6 +9,7 @@ package modelo.datos.VO;
 public class VotosPublicacionVO {
   private String usuario;
   private int publicacion;
+  private LocalDate fecha;
 
   /**
    * @param usuario
@@ -14,10 +17,11 @@ public class VotosPublicacionVO {
    * 
    *        Construye el objeto VotosPublicacionVO dados TODOS los parametros
    */
-  public VotosPublicacionVO(String usuario, int publicacion) {
+  public VotosPublicacionVO(String usuario, int publicacion, LocalDate fecha) {
     super();
     this.usuario = usuario;
     this.publicacion = publicacion;
+    this.fecha = fecha;
   }
 
   /**
@@ -30,18 +34,19 @@ public class VotosPublicacionVO {
   @Override
   public String toString() {
     return "VotosPublicacionVO {\n\tusuario: " + usuario + "\n\tpublicacion: "
-        + publicacion + "\n}";
+        + publicacion + "\n\tfecha: " + fecha + "\n}";
   }
 
   public String toSQLInsert() {
     return "INSERT INTO votosPublicacion (usuario, id_publicacion) VALUES (\"" + usuario
-        + "\", " + publicacion + ");";
+        + "\", " + publicacion + ", '" + fecha + "');";
   }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
+    result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
     result = prime * result + publicacion;
     result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
     return result;
@@ -59,6 +64,13 @@ public class VotosPublicacionVO {
       return false;
     }
     VotosPublicacionVO other = (VotosPublicacionVO) obj;
+    if (fecha == null) {
+      if (other.fecha != null) {
+        return false;
+      }
+    } else if (!fecha.equals(other.fecha)) {
+      return false;
+    }
     if (publicacion != other.publicacion) {
       return false;
     }
@@ -86,6 +98,14 @@ public class VotosPublicacionVO {
 
   public void setPublicacion(int publicacion) {
     this.publicacion = publicacion;
+  }
+
+  public LocalDate getFecha() {
+    return fecha;
+  }
+
+  public void setFecha(LocalDate fecha) {
+    this.fecha = fecha;
   }
 
 }

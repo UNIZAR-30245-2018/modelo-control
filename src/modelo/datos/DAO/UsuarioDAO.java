@@ -230,8 +230,8 @@ public class UsuarioDAO {
 	 * @param email
 	 * @param password
 	 * @param conexion
-	 * @return true si encuentra un usuario con igual nombre y contrase�a, o email y
-	 *         contrase�a
+	 * @return true si encuentra un usuario con igual nombre y contraseña, o email y
+	 *         contraseña
 	 */
 	public boolean existeUsuario(String seudonimo, String email, String password, Connection conexion) {
 		boolean retVal = false;

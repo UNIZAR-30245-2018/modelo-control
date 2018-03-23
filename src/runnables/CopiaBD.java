@@ -28,12 +28,12 @@ import modelo.datos.VO.UsuarioVO;
 import modelo.datos.VO.VotosPublicacionVO;
 
 /**
- * @author usuario
+ * @author Jorge Rambla
  *
  */
 public class CopiaBD {
   public static void muestraAyuda() {
-    System.out.println("-help Te muestra la lista de comandos.");
+    System.out.println("--help Te muestra la lista de comandos.");
     System.out.println(
         "-dir [directorio] [nombre del fichero] Te permite establecer el directorio donde se va a guardar el fichero.");
     System.out.println(
@@ -201,18 +201,20 @@ public class CopiaBD {
     String formato = "sql";
     if (args.length == 0) {
       System.out.println(
-          "Parametros insuficientes escribe el parmetro -help para recibir mas información.");
+          "Parametros insuficientes escribe el parmetro --help para recibir mas información.");
     } else {
       for (int p = 0; p < args.length; p++) {
         switch (args[p]) {
-          case "-help":
+          case "--help":
             muestraAyuda();
             ex = false;
             break;
           case "-dir":
-            dir = args[++p];
-            nombre = args[++p];
-            ready = true;
+            if(args.length-(p+2)>0){
+              dir = args[++p];
+              nombre = args[++p];
+              ready = true;
+            }
             break;
           case "-form":
             if (args[++p].toLowerCase().equals("json")) {
@@ -229,7 +231,7 @@ public class CopiaBD {
       }
 
       String ruta = dir + "/" + nombre + "." + formato;
-      System.out.println(ruta);
+      //System.out.println(ruta);
       if (ready && ex) {
         if (formato.equals("sql")) {
           copiaSQL(ruta, completa, debug);
@@ -239,7 +241,7 @@ public class CopiaBD {
       } else if (!ex) {
       } else {
         System.out.println(
-            "Argumentos insfucientes falta especificar -dir, escribe -help para recibir ayuda");
+            "Argumentos insfucientes falta especificar -dir, escribe --help para recibir ayuda");
       }
 
     }
