@@ -329,4 +329,9 @@ public class UsuarioVO {
   public void setPublicaciones(List<PublicacionVO> publicaciones) {
     this.publicaciones = publicaciones;
   }
+
+  public int getPorcentajeNivel() {
+    int divisor = 100 * (int) (nivel / 10 + 1);
+    return (int) (((float) this.experiencia / (float) divisor) * 100);
+  }
 }
