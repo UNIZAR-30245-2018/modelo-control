@@ -1,5 +1,15 @@
 package runnables;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import modelo.datos.BD.GestorDeConexionesBD;
+import modelo.datos.DAO.PublicacionDAO;
+import modelo.datos.VO.PublicacionVO;
+
 public class GestionReportesLocal {
   public static void muestraAyuda() {
     System.out.println("--help Te muestra la lista de comandos.");
@@ -13,8 +23,89 @@ public class GestionReportesLocal {
     System.out.println(
         "\n\n Por defecto se ejecutara en modo min, pero hace falta espcificar si es en lista o gestion");
   }
+  
+  public static void lista(int min, int max, boolean range, boolean debug) throws SQLException{
+    Connection conexion = GestorDeConexionesBD.getConnection();
 
-  public static void main(String[] args) {
+    if(range){
+      ArrayList<PublicacionVO> aux = new PublicacionDAO().publicacionesReportsRange(min, max, conexion);
+      for (PublicacionVO p : aux){
+        System.out.println("ID [" + p.getId_publicacion() + "] - Reports [" + p.getReports() + "]\n\t" + p.getTexto());
+      }
+    } else {
+      ArrayList<PublicacionVO> aux = new PublicacionDAO().publicacionesReports(min, conexion);
+      for (PublicacionVO p : aux){
+        System.out.println("ID [" + p.getId_publicacion() + "] - Reports [" + p.getReports() + "]\n\t" + p.getTexto());
+      }
+    }
+  }
+  
+  public static void interfaz(int min, int max, boolean range, boolean debug) throws SQLException, IOException {
+    Connection conexion = GestorDeConexionesBD.getConnection();
+
+    if(range && min < max && max != -1){
+      ArrayList<PublicacionVO> aux = new PublicacionDAO().publicacionesReportsRange(min, max, conexion);
+      for (PublicacionVO p : aux){
+        while (true){
+          System.out.println("ID [" + p.getId_publicacion() + "] - Reports [" + p.getReports() + "]\n\t" + p.getTexto());
+          
+          System.out.println("\n1- Eliminar publicación\t2- Eliminar reportes\t3- omitir");
+          String n = new BufferedReader(new InputStreamReader(System.in)).readLine();
+          
+          try {
+            int opcion = Integer.parseInt(n);
+            
+            switch(opcion){
+              case 1:
+                new PublicacionDAO().eliminarPublicacion(p.getId_publicacion(), conexion);
+                break;
+              case 2:
+                new PublicacionDAO().limpiarReportes(p.getId_publicacion(), conexion);
+                break;
+              case 3:
+                break;
+            }
+    
+          } catch (Exception e) {
+            e.printStackTrace(System.err);
+          }
+          break;
+        }
+      }
+    } else {
+      ArrayList<PublicacionVO> aux = new PublicacionDAO().publicacionesReports(min, conexion);
+      for (PublicacionVO p : aux){
+        while (true){
+          System.out.println("ID [" + p.getId_publicacion() + "] - Reports [" + p.getReports() + "]\n\t" + p.getTexto());
+          
+          System.out.println("\n1- Eliminar publicación\t2- Eliminar reportes\t3- omitir");
+          String n = new BufferedReader(new InputStreamReader(System.in)).readLine();
+          
+          try {
+            int opcion = Integer.parseInt(n);
+            
+            switch(opcion){
+              case 1:
+                new PublicacionDAO().eliminarPublicacion(p.getId_publicacion(), conexion);
+                break;
+              case 2:
+                new PublicacionDAO().limpiarReportes(p.getId_publicacion(), conexion);
+                break;
+              case 3:
+                break;
+            }
+    
+          } catch (Exception e) {
+            e.printStackTrace(System.err);
+          }
+          break;
+        }
+      }
+    }
+    
+  }
+
+  public static void main(String[] args) throws SQLException, IOException {
     boolean ready = false;
     boolean ex = true;
     boolean list = false;
@@ -63,7 +154,11 @@ public class GestionReportesLocal {
       // Comienzo de la ejecución
      
       if (ready & ex) {
-        
+        if(list) {
+          lista(min, max, range, debug);
+        } else {
+          interfaz(min, max, range, debug);
+        }
       } else if (!ex) {
         //Empty
       } else {
