@@ -32,7 +32,7 @@ public class PublicacionDAO {
       } else {
         retVal =
             new PublicacionVO(rs.getInt(1), rs.getString(2), rs.getDate(3).toLocalDate(),
-                (rs.getInt(4) == 0) ? false : true, rs.getInt(5), rs.getString(6));
+                (rs.getInt(4) == 0) ? false : true, rs.getInt(5), rs.getString(6), rs.getInt(7));
       }
     } catch (Exception e) {
       e.printStackTrace(System.err);
@@ -54,7 +54,7 @@ public class PublicacionDAO {
         do {
           retVal.add(new PublicacionVO(rs.getInt(1), rs.getString(2),
               rs.getDate(3).toLocalDate(), (rs.getInt(4) == 0) ? false : true,
-              rs.getInt(5), rs.getString(6)));
+              rs.getInt(5), rs.getString(6), rs.getInt(7)));
         } while (rs.next());
       }
     } catch (Exception e) {
