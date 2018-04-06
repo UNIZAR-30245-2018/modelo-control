@@ -131,6 +131,21 @@ public class WebFacade {
     return devolver;
   }
 
+  public ArrayList<JuegoVO> getJuegos() throws java.sql.SQLException {
+    Connection conexion = null;
+    ArrayList<JuegoVO> devolver = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      JuegoDAO juegoDAO = new JuegoDAO();
+      devolver = juegoDAO.getAll(conexion);
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return devolver;
+  }
+
   public static void main(String[] args) throws SQLException {
 
   }
