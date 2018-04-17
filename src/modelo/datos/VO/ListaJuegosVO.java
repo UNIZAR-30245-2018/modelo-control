@@ -7,6 +7,7 @@ package modelo.datos.VO;
 public class ListaJuegosVO {
   private String usuario;
   private int juego;
+  private int tipo;
 
   /**
    * @param juego
@@ -14,10 +15,11 @@ public class ListaJuegosVO {
    * 
    *        Construye el objeto ListaJuegosVO con TODOS los parametros
    */
-  public ListaJuegosVO(int juego, String usuario) {
+  public ListaJuegosVO(int juego, String usuario, int tipo) {
     super();
     this.juego = juego;
     this.usuario = usuario;
+    this.tipo = tipo;
   }
 
   /**
@@ -27,14 +29,32 @@ public class ListaJuegosVO {
   
    @Override
   public String toString() {
-    return "ListaJuegosVO {\n\tusuario: " + usuario + "\n\tjuego: " + juego + "\n}";
+    return "ListaJuegosVO {\n\tusuario: " + usuario + "\n\tjuego: " + juego + "\n\ttipo: "
+        + tipo + "\n}";
   }
+   
+   public String toSQLInsert(){
+     String tabla = "";
+     switch(tipo){
+       case 0:
+         tabla = "juegoPendiente";
+         break;
+       case 1:
+         tabla = "juegoEnCurso";
+         break;
+       case 2:
+         tabla = "juegoCompletado";
+         break;
+     }
+     return "INSERT INTO " + tabla + "(usuario, id_juego) VALUES (\"" + usuario + "\", " + juego + ");"; 
+   }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result + juego;
+    result = prime * result + tipo;
     result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
     return result;
   }
@@ -52,6 +72,9 @@ public class ListaJuegosVO {
     }
     ListaJuegosVO other = (ListaJuegosVO) obj;
     if (juego != other.juego) {
+      return false;
+    }
+    if (tipo != other.tipo) {
       return false;
     }
     if (usuario == null) {
@@ -78,6 +101,14 @@ public class ListaJuegosVO {
 
   public void setJuego(int juego) {
     this.juego = juego;
+  }
+
+  public int getTipo() {
+    return tipo;
+  }
+
+  public void setTipo(int tipo) {
+    this.tipo = tipo;
   }
 
 

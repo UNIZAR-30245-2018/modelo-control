@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import modelo.datos.VO.JuegoVO;
 import modelo.datos.VO.UsuarioVO;
 
 /**
@@ -292,21 +294,55 @@ public class UsuarioDAO {
 	}
 
 	public void insertarUsuario(UsuarioVO usuario, Connection conexion) {
-		try {
-			String query = "INSERT INTO usuario (seudonimo, nombre, email, password) VALUES (?,?,?,?)";
-			
-			PreparedStatement ps = conexion.prepareStatement(query);
-			
-			ps.setString(1, usuario.getSeudonimo());
-			ps.setString(2, usuario.getNombre());
-			ps.setString(3, usuario.getEmail());
-			ps.setString(4, usuario.getPassword());
-			
-			if(ps.executeUpdate() != 1) {
-				throw new SQLException("Ha habido problemas a la hora de insertar el usuario");
-			}
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
-	}
+        try {
+            String query = "INSERT INTO usuario (seudonimo, nombre, email, password) VALUES (?,?,?,?)";
+
+            PreparedStatement ps = conexion.prepareStatement(query);
+
+            ps.setString(1, usuario.getSeudonimo());
+            ps.setString(2, usuario.getNombre());
+            ps.setString(3, usuario.getEmail());
+            ps.setString(4, usuario.getPassword());
+
+            if(ps.executeUpdate() != 1) {
+                throw new SQLException("Ha habido problemas a la hora de insertar el usuario");
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+    }
+
+    /*Método que saca todos los juegos completados de un usuario */
+    public ArrayList<JuegoVO> getEnCursoByUser(String user, Connection conexion) {
+        ArrayList<JuegoVO> retVal = new ArrayList<>();
+
+        try {
+            String queryCompletados = "SELECT * FROM juegoEnCurso WHERE usuario = ?";
+
+            PreparedStatement psCompletados = conexion.prepareStatement(queryCompletados);
+
+            psCompletados.setString(1, user);
+
+
+            ResultSet rs = psCompletados.executeQuery();
+
+            if (!rs.first()) {
+                throw new SQLException(
+                        "Error: No se ha encontrado ningún juego completado al usuario " + user);
+            } else {
+                while (rs.next()) {
+
+                    String nombre = rs.getString("nombre");
+                    int juego = rs.getInt("id_juego");
+                    retVal.add(new JuegoVO(juego,nombre));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+
+        return retVal;
+
+    }
+
 }

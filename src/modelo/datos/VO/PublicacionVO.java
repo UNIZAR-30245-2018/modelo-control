@@ -61,6 +61,13 @@ public class PublicacionVO {
         + juego + "\n\ttexto: " + texto + "\n}";
   }
 
+  public String toSQLInsert() {
+    int sp = (spoiler) ? 1 : 0;
+    return "INSERT INTO publicacion (id_publicacion, usuario, fecha, spoiler, juego, texto) VALUES ("
+        + id_publicacion + ", \"" + usuario + "\", '" + fecha + "', " + sp + ", " + 0
+        + ", \"" + texto + "\");";
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
