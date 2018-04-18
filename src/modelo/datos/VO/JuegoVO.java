@@ -30,6 +30,11 @@ public class JuegoVO {
     return "JuegoVO {\n\tid_juego: " + id_juego + "\n\tnombre: " + nombre + "\n}";
   }
 
+  public String toSQLInsert() {
+    return "INSERT INTO juego (id_juego, nombre) VALUES (\"" + id_juego + "\", \""
+        + nombre + "\");";
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;

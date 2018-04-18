@@ -63,6 +63,7 @@ public class WebFacade {
   }
 
   public void anadirJuegosEnCursoUser(UsuarioVO user) throws SQLException {
+
     Connection conexion = null;
     try {
       conexion = GestorDeConexionesBD.getConnection();
@@ -85,11 +86,12 @@ public class WebFacade {
     try {
       conexion = GestorDeConexionesBD.getConnection();
       UsuarioDAO usuarioDAO = new UsuarioDAO();
-      if (usuarioDAO.existeUsuario(email, email, pass, conexion)) {
-        // throw new SQLException("Problemas con la clave!!!!");
-        devolver = usuarioDAO.getUsuario(email, conexion);
+      if (usuarioDAO.existeUsuarioEmail(email, pass, conexion)) {
+    	  devolver = usuarioDAO.getUsuarioEmail(email, conexion);
+      } else if (usuarioDAO.existeUsuarioSeudonimo(email, pass, conexion)) {
+    	  devolver = usuarioDAO.getUsuario(email, conexion);
       } else {
-        devolver = null;
+    	  devolver = null;
       }
     } catch (Exception e) {
       e.printStackTrace(System.err);
@@ -114,6 +116,26 @@ public class WebFacade {
     return devolver;
 
   }
+  
+  public String getEmail(String identificacion) throws java.sql.SQLException {
+	    Connection conexion = null;
+	    String devolver = null;
+	    try {
+	      conexion = GestorDeConexionesBD.getConnection();
+	      UsuarioDAO usuarioDAO = new UsuarioDAO();
+	      if (usuarioDAO.existeEmail(identificacion, conexion)) {
+	    	  devolver = identificacion;
+	      } else {
+	    	  devolver = usuarioDAO.getEmail(identificacion, conexion);
+	      }
+	    } catch (Exception e) {
+	      e.printStackTrace(System.err);
+	    } finally {
+	      conexion.close();
+	    }
+	    return devolver;
+
+	  }
 
 
   public ArrayList<LogroVO> getLogros() throws java.sql.SQLException {
@@ -123,6 +145,21 @@ public class WebFacade {
       conexion = GestorDeConexionesBD.getConnection();
       LogroDAO logroDAO = new LogroDAO();
       devolver = logroDAO.getAllLogro(conexion);
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return devolver;
+  }
+
+  public ArrayList<JuegoVO> getJuegos() throws java.sql.SQLException {
+    Connection conexion = null;
+    ArrayList<JuegoVO> devolver = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      JuegoDAO juegoDAO = new JuegoDAO();
+      devolver = juegoDAO.getAll(conexion);
     } catch (Exception e) {
       e.printStackTrace(System.err);
     } finally {

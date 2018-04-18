@@ -41,7 +41,7 @@ public class JuegoDAO {
     return retVal;
   }
 
-  public ArrayList<JuegoVO> getAllJuego(Connection conexion) {
+  public ArrayList<JuegoVO> getAll(Connection conexion) {
     ArrayList<JuegoVO> retVal = new ArrayList<JuegoVO>();
     try {
       String query = "SELECT * from juego";

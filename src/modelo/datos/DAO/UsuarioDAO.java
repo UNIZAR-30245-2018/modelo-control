@@ -48,6 +48,30 @@ public class UsuarioDAO {
 
 		return retVal;
 	}
+	
+	public UsuarioVO getUsuarioEmail(String email, Connection conexion) {
+		UsuarioVO retVal = new UsuarioVO();
+		try {
+			String query = "SELECT * FROM usuario WHERE email = ?";
+
+			PreparedStatement ps = conexion.prepareStatement(query);
+
+			ps.setString(1, email);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (!rs.first()) {
+				throw new SQLException("Error: No se ha encontrado ningun usuario con el email " + email);
+			} else {
+				retVal = new UsuarioVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getInt(6), rs.getInt(7));
+			}
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+
+		return retVal;
+	}
 
 	public ArrayList<UsuarioVO> getAllUsuario(Connection conexion) {
 		ArrayList<UsuarioVO> retVal = new ArrayList<UsuarioVO>();
@@ -230,10 +254,10 @@ public class UsuarioDAO {
 	 * @param email
 	 * @param password
 	 * @param conexion
-	 * @return true si encuentra un usuario con igual nombre y contrase�a, o email y
-	 *         contrase�a
+	 * @return true si encuentra un usuario con igual nombre y contraseña, o email y
+	 *         contraseña
 	 */
-	public boolean existeUsuario(String seudonimo, String email, String password, Connection conexion) {
+	public boolean existeUsuarioSeudonimo(String seudonimo, String password, Connection conexion) {
 		boolean retVal = false;
 
 		try {
@@ -250,7 +274,18 @@ public class UsuarioDAO {
 				if (rs.first()) {
 					return true;
 				}
-			} else if (email != null) {
+			} 
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+		return retVal;
+	}
+	
+	public boolean existeUsuarioEmail(String email, String password, Connection conexion) {
+		boolean retVal = false;
+
+		try {
+			if (email != null) {
 				String query = "SELECT * FROM usuario WHERE email = ? AND password = ?";
 
 				PreparedStatement ps = conexion.prepareStatement(query);
@@ -261,9 +296,9 @@ public class UsuarioDAO {
 				ResultSet rs = ps.executeQuery();
 
 				if (rs.first()) {
-					retVal = true;
+					return true;
 				}
-			}
+			} 
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
@@ -280,6 +315,29 @@ public class UsuarioDAO {
 				PreparedStatement ps = conexion.prepareStatement(query);
 
 				ps.setString(1, email);
+
+				ResultSet rs = ps.executeQuery();
+
+				if (rs.first()) {
+					retVal = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+		return retVal;
+	}
+	
+	public boolean existeSeudonimo(String seudonimo, Connection conexion) {
+		boolean retVal = false;
+
+		try {
+			if (seudonimo != null) {
+				String query = "SELECT * FROM usuario WHERE seudonimo = ?";
+
+				PreparedStatement ps = conexion.prepareStatement(query);
+
+				ps.setString(1, seudonimo);
 
 				ResultSet rs = ps.executeQuery();
 

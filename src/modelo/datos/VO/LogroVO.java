@@ -22,13 +22,23 @@ public class LogroVO {
    * 
    *        Construye el objeto Logro con TODOS los valores
    */
+<<<<<<< HEAD
   public LogroVO(String id_logro, String nombre, String imagen, String imagen_conseguido, String descripcion,
       int experiencia, boolean secreto) {
+=======
+  public LogroVO(String id_logro, String nombre, String imagen, String imagen_conseguido,
+      String descripcion, int experiencia, boolean secreto) {
+>>>>>>> bd6ad225e12cf5fb752ae16f7c6dfe4314706e0d
     super();
     this.id_logro = id_logro;
     this.nombre = nombre;
     this.imagen = (imagen == null) ? "sin_imagen" : imagen;
+<<<<<<< HEAD
     this.imagen_conseguido = (imagen_conseguido == null) ? "sin_imagen_2" : imagen_conseguido;
+=======
+    this.imagen_conseguido =
+        (imagen_conseguido == null) ? "sin_imagen_2" : imagen_conseguido;
+>>>>>>> bd6ad225e12cf5fb752ae16f7c6dfe4314706e0d
     this.descripcion = descripcion;
     this.experiencia = experiencia;
     this.secreto = secreto;
@@ -57,6 +67,12 @@ public class LogroVO {
         + imagen + "\n\timagen_conseguido: " + imagen_conseguido + "\n\tdescripcion: "
         + descripcion + "\n\texperiencia: " + experiencia + "\n\tsecreto: " + secreto
         + "\n}";
+  }
+
+  public String toSQLInsert() {
+    int sec = (secreto == false) ? 0 : 1;
+    return "INSERT INTO logro (id_logro, nombre, imagen, imagen_conseguido, descripcion, experiencia, secreto) VALUES (\""
+        + id_logro + "\", \"" + nombre + "\", \"" + imagen + "\", \"" + imagen_conseguido + "\", \"" + descripcion + "\", " + experiencia + ", " + sec + ");";
   }
 
   @Override

@@ -2,7 +2,6 @@ package control;
 
 import modelo.datos.VO.UsuarioVO;
 import modelo.datos.WebFacade;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +26,7 @@ public class RegisterServlet extends HttpServlet {
         WebFacade fachada = new WebFacade();
         try {
             if(fachada.existeEmail(email)){
-                response.sendRedirect("login.html");
+                response.sendRedirect("Login.jsp");
             }
             else{
                 fachada.insertarUsuario(seudonimo, name, email, pass);
@@ -35,10 +34,10 @@ public class RegisterServlet extends HttpServlet {
 				Cookie cookiep = new Cookie("password",pass);
 				response.addCookie(cookiee);
 				response.addCookie(cookiep); 
-				response.sendRedirect("verPerfil.html");
+				response.sendRedirect("verPerfil.jsp");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
     }
+  }
 }
