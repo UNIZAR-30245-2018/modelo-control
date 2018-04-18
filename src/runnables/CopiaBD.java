@@ -107,7 +107,7 @@ public class CopiaBD {
         fw.write(j.toSQLInsert() + "\n");
       }
 
-      ArrayList<LogroVO> aux8 = new LogroDAO().getAll(conexion);
+      ArrayList<LogroVO> aux8 = new LogroDAO().getAllLogro(conexion);
       for (LogroVO l : aux8) {
         if (debug) {
           System.out.println(l.toSQLInsert());
@@ -180,7 +180,7 @@ public class CopiaBD {
         fw.write(j + "\n");
       }
 
-      ArrayList<LogroVO> aux8 = new LogroDAO().getAll(conexion);
+      ArrayList<LogroVO> aux8 = new LogroDAO().getAllLogro(conexion);
       for (LogroVO l : aux8) {
         if (debug) {
           System.out.println(l);
