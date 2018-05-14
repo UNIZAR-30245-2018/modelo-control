@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import modelo.datos.VO.PublicacionVO;
 
@@ -150,5 +151,55 @@ public class PublicacionDAO {
     }
     return retVal;
   }
+
+  public int addPublicacion(PublicacionVO publicacion,Connection conexion) {
+    int id = -1;
+    try {
+      String query = publicacion.toSQLInsert();
+
+      PreparedStatement ps = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+      ResultSet generatedKeys = ps.getGeneratedKeys();
+      if (generatedKeys.next()) {
+        id = generatedKeys.getInt(1);
+        publicacion.setId_publicacion(id);
+      } else {
+        throw new SQLException("Creating user failed, no ID obtained.");
+      }
+    }
+    catch(Exception e){
+          System.err.println("Ha habido una excepcion al añadir una publicacion");
+    }
+
+    return id;
+  }
+
+  public ArrayList<PublicacionVO> getPublicacionOfAnUser(String username,Connection conexion) {
+    ArrayList<PublicacionVO> listaPublicaciones = new ArrayList<PublicacionVO>();
+    try {
+      String query = "SELECT * FROM publicacion WHERE usuario = ?";
+
+      PreparedStatement ps = conexion.prepareStatement(query);
+
+      ps.setString(1,username);
+
+      ResultSet rs = ps.executeQuery();
+
+      if (!rs.first()) {
+      } else {
+        do {
+          listaPublicaciones.add(new PublicacionVO(rs.getInt(1), rs.getString(2),
+              rs.getDate(3).toLocalDate(), (rs.getInt(4) == 0) ? false : true,
+              rs.getInt(5), rs.getString(6), rs.getInt(7)));
+        } while (rs.next());
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
+    return listaPublicaciones;
+  }
+
+
+
 }
 

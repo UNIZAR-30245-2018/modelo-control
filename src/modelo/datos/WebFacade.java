@@ -10,10 +10,12 @@ import modelo.datos.BD.GestorDeConexionesBD;
 import modelo.datos.DAO.JuegoDAO;
 import modelo.datos.DAO.ListaJuegosDAO;
 import modelo.datos.DAO.LogroDAO;
+import modelo.datos.DAO.PublicacionDAO;
 import modelo.datos.DAO.UsuarioDAO;
 import modelo.datos.VO.JuegoVO;
 import modelo.datos.VO.ListaJuegosVO;
 import modelo.datos.VO.LogroVO;
+import modelo.datos.VO.PublicacionVO;
 import modelo.datos.VO.UsuarioVO;
 
 /**
@@ -166,6 +168,51 @@ public class WebFacade {
       conexion.close();
     }
     return devolver;
+  }
+
+  public ArrayList<PublicacionVO> getPublicaciones() throws java.sql.SQLException {
+    Connection conexion = null;
+    ArrayList<PublicacionVO> devolver = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      PublicacionDAO publicacionDAO = new PublicacionDAO();
+      devolver = publicacionDAO.getAll(conexion);
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return devolver;
+  }
+
+  public ArrayList<PublicacionVO> getPublicacionesOfAnUser(String user) throws java.sql.SQLException {
+    Connection conexion = null;
+    ArrayList<PublicacionVO> devolver = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      PublicacionDAO publicacionDAO = new PublicacionDAO();
+      devolver = publicacionDAO.getPublicacionOfAnUser(user,conexion);
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return devolver;
+  }
+  public boolean añadirPublicacion(PublicacionVO pub) throws java.sql.SQLException {
+    Connection conexion = null;
+    boolean res = false;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      PublicacionDAO publicacionDAO = new PublicacionDAO();
+      if(publicacionDAO.addPublicacion(pub,conexion) != -1) res =  true;
+      else res =  false;
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return res;
   }
 
   public static void main(String[] args) throws SQLException {

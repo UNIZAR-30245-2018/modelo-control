@@ -67,8 +67,7 @@ public class PublicacionVO {
 
 	public String toSQLInsert() {
 		int sp = (spoiler) ? 1 : 0;
-		return "INSERT INTO publicacion (id_publicacion, usuario, fecha, spoiler, juego, texto, reports) VALUES ("
-				+ id_publicacion + ", \"" + usuario + "\", '" + fecha + "', " + sp + ", " + 0 + ", \"" + texto + "\", "
+		return "INSERT INTO publicacion (usuario, fecha, spoiler, juego, texto, reports) VALUES (\"" + usuario + "\", '" + fecha + "', " + sp + ", " + 0 + ", \"" + texto + "\", "
 				+ reports + ");";
 	}
 
