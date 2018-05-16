@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import modelo.datos.VO.PublicacionVO;
 import modelo.datos.WebFacade;
 
-public class añadirPublicacionServlet extends HttpServlet {
+public class anadirPublicacionServlet extends HttpServlet {
 
   /**
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -20,13 +20,13 @@ public class añadirPublicacionServlet extends HttpServlet {
       throws ServletException, IOException {
     WebFacade fachada = new WebFacade();
     try {
-      String user = request.getParameter("email");
+      String user = request.getParameter("seudonimo");
       LocalDate fecha = LocalDate.now();
       String spoiler = request.getParameter("spoiler");
       String juego = request.getParameter("juego");
       String texto = request.getParameter("texto");
       PublicacionVO publicacionVO = new PublicacionVO(0,user,fecha,Integer.parseInt(juego),texto);
-      fachada.añadirPublicacion(publicacionVO);
+      fachada.anadirPublicacion(publicacionVO);
       request.getRequestDispatcher("verPerfil.jsp").forward(request, response);
     } catch (Exception e) {
       e.printStackTrace(System.err);

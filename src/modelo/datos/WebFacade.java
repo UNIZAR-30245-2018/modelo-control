@@ -199,7 +199,7 @@ public class WebFacade {
     }
     return devolver;
   }
-  public boolean añadirPublicacion(PublicacionVO pub) throws java.sql.SQLException {
+  public boolean anadirPublicacion(PublicacionVO pub) throws java.sql.SQLException {
     Connection conexion = null;
     boolean res = false;
     try {
