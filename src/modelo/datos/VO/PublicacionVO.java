@@ -37,6 +37,14 @@ public class PublicacionVO {
 		this.texto = texto;
 		this.reports = reports;
 	}
+	
+	public PublicacionVO(String usuario, LocalDate fecha, int juego, String texto) {
+    super();
+    this.usuario = usuario;
+    this.fecha = fecha;
+    this.juego = juego;
+    this.texto = texto;
+}
 
 	/**
 	 * @param id_publicacion

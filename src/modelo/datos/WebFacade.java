@@ -199,20 +199,17 @@ public class WebFacade {
     }
     return devolver;
   }
-  public boolean anadirPublicacion(PublicacionVO pub) throws java.sql.SQLException {
+  public void anadirPublicacion(PublicacionVO pub) throws java.sql.SQLException {
     Connection conexion = null;
-    boolean res = false;
     try {
       conexion = GestorDeConexionesBD.getConnection();
       PublicacionDAO publicacionDAO = new PublicacionDAO();
-      if(publicacionDAO.addPublicacion(pub,conexion) != -1) res =  true;
-      else res =  false;
+      publicacionDAO.addPublicacion(pub,conexion);
     } catch (Exception e) {
       e.printStackTrace(System.err);
     } finally {
       conexion.close();
     }
-    return res;
   }
 
   public static void main(String[] args) throws SQLException {

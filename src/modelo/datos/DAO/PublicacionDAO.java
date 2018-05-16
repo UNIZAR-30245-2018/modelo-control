@@ -4,6 +4,7 @@
 package modelo.datos.DAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -152,26 +153,23 @@ public class PublicacionDAO {
     return retVal;
   }
 
-  public int addPublicacion(PublicacionVO publicacion,Connection conexion) {
-    int id = -1;
+  public void addPublicacion(PublicacionVO publicacion,Connection conexion) {
     try {
-      String query = publicacion.toSQLInsert();
+      String query = "INSERT INTO publicacion (usuario, fecha, juego, texto) VALUES (?,?,?,?)";
 
-      PreparedStatement ps = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+      PreparedStatement ps = conexion.prepareStatement(query);
 
-      ResultSet generatedKeys = ps.getGeneratedKeys();
-      if (generatedKeys.next()) {
-        id = generatedKeys.getInt(1);
-        publicacion.setId_publicacion(id);
-      } else {
-        throw new SQLException("Creating user failed, no ID obtained.");
+      ps.setString(1, publicacion.getUsuario());
+      ps.setDate(2, Date.valueOf(publicacion.getFecha()));
+      ps.setInt(3, publicacion.getJuego());
+      ps.setString(4, publicacion.getTexto());
+
+      if(ps.executeUpdate() != 1) {
+          throw new SQLException("Ha habido problemas a la hora de insertar el usuario");
       }
-    }
-    catch(Exception e){
+    } catch(Exception e){
           System.err.println("Ha habido una excepcion al añadir una publicacion");
     }
-
-    return id;
   }
 
   public ArrayList<PublicacionVO> getPublicacionOfAnUser(String username,Connection conexion) {
