@@ -403,4 +403,20 @@ public class UsuarioDAO {
 
     }
 
+	public void insertarJuego(UsuarioVO usuario, String id,Connection conexion) {
+		try {
+			String query = "INSERT INTO juegoEnCurso (usuario,id_juego) VALUES (?,?)";
+
+			PreparedStatement ps = conexion.prepareStatement(query);
+
+			ps.setString(1, usuario.getSeudonimo());
+			ps.setString(2, id);
+
+			if(ps.executeUpdate() != 1) {
+				throw new SQLException("Ha habido problemas a la hora de insertar el usuario");
+			}
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+	}
 }

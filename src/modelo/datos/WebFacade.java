@@ -72,7 +72,7 @@ public class WebFacade {
       UsuarioDAO usuarioDAO = new UsuarioDAO();
       if (user != null) {
         // throw new SQLException("Problemas con la clave!!!!");
-        user.setJuegosEnCurso(usuarioDAO.getEnCursoByUser(user.getNombre(), conexion));
+        user.setJuegosEnCurso(usuarioDAO.getEnCursoByUser(user.getSeudonimo(), conexion));
       }
     } catch (Exception e) {
       e.printStackTrace(System.err);
@@ -138,7 +138,6 @@ public class WebFacade {
 	    return devolver;
 
 	  }
-
 
   public ArrayList<LogroVO> getLogros() throws java.sql.SQLException {
     Connection conexion = null;
@@ -210,6 +209,25 @@ public class WebFacade {
     } finally {
       conexion.close();
     }
+  }
+
+  public void anadirJuegoAUser(UsuarioVO user,String id_juego) throws SQLException {
+
+    Connection conexion = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      if (user != null) {
+        // throw new SQLException("Problemas con la clave!!!!");
+        usuarioDAO.insertarJuego(user,id_juego,conexion);
+        user.setJuegosEnCurso(usuarioDAO.getEnCursoByUser(user.getSeudonimo(), conexion));
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+
   }
 
   public static void main(String[] args) throws SQLException {
