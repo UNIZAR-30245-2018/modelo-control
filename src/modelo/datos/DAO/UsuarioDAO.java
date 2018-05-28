@@ -402,113 +402,15 @@ public class UsuarioDAO {
         return retVal;
 
     }
-    
-    public ArrayList<JuegoVO> getPendientesByUser(String user, Connection conexion) {
-        ArrayList<JuegoVO> retVal = new ArrayList<>();
 
-        try {
-            String queryCompletados = "SELECT * FROM juegoPendiente WHERE usuario = ?";
-
-            PreparedStatement psCompletados = conexion.prepareStatement(queryCompletados);
-
-            psCompletados.setString(1, user);
-
-
-            ResultSet rs = psCompletados.executeQuery();
-
-            if (!rs.first()) {
-                throw new SQLException(
-                        "Error: No se ha encontrado ningún juego completado al usuario " + user);
-            } else {
-                while (rs.next()) {
-
-                    String nombre = rs.getString("nombre");
-                    int juego = rs.getInt("id_juego");
-                    retVal.add(new JuegoVO(juego,nombre));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
-
-        return retVal;
-
-    }
-    
-    public ArrayList<JuegoVO> getCompletadosByUser(String user, Connection conexion) {
-        ArrayList<JuegoVO> retVal = new ArrayList<>();
-
-        try {
-            String queryCompletados = "SELECT * FROM juegoCompletado WHERE usuario = ?";
-
-            PreparedStatement psCompletados = conexion.prepareStatement(queryCompletados);
-
-            psCompletados.setString(1, user);
-
-
-            ResultSet rs = psCompletados.executeQuery();
-
-            if (!rs.first()) {
-                throw new SQLException(
-                        "Error: No se ha encontrado ningún juego completado al usuario " + user);
-            } else {
-                while (rs.next()) {
-
-                    String nombre = rs.getString("nombre");
-                    int juego = rs.getInt("id_juego");
-                    retVal.add(new JuegoVO(juego,nombre));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
-
-        return retVal;
-
-    }
-
-	public void insertarJuegoPendiente(UsuarioVO usuario, int id,  Connection conexion) {
+	public void insertarJuego(UsuarioVO usuario, String id,Connection conexion) {
 		try {
-			String query = "INSERT INTO juegoPendiente (usuario, id_juego) VALUES (?,?)";
+			String query = "INSERT INTO juegoEnCurso (usuario,id_juego) VALUES (?,?)";
 
 			PreparedStatement ps = conexion.prepareStatement(query);
 
 			ps.setString(1, usuario.getSeudonimo());
-			ps.setInt(2, id);
-
-			if(ps.executeUpdate() != 1) {
-				throw new SQLException("Ha habido problemas a la hora de insertar el usuario");
-			}
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
-	}
-	
-	public void insertarJuegoEnCurso(UsuarioVO usuario, int id,  Connection conexion) {
-		try {
-			String query = "INSERT INTO juegoEnCurso (usuario, id_juego) VALUES (?,?)";
-
-			PreparedStatement ps = conexion.prepareStatement(query);
-
-			ps.setString(1, usuario.getSeudonimo());
-			ps.setInt(2, id);
-
-			if(ps.executeUpdate() != 1) {
-				throw new SQLException("Ha habido problemas a la hora de insertar el usuario");
-			}
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
-	}
-	
-	public void insertarJuegoCompletado(UsuarioVO usuario, int id,  Connection conexion) {
-		try {
-			String query = "INSERT INTO juegoCompletado (usuario, id_juego) VALUES (?,?)";
-
-			PreparedStatement ps = conexion.prepareStatement(query);
-
-			ps.setString(1, usuario.getSeudonimo());
-			ps.setInt(2, id);
+			ps.setString(2, id);
 
 			if(ps.executeUpdate() != 1) {
 				throw new SQLException("Ha habido problemas a la hora de insertar el usuario");

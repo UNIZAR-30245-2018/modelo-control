@@ -25,8 +25,15 @@ public class anadirPublicacionServlet extends HttpServlet {
       String spoiler = request.getParameter("spoiler");
       String juego = request.getParameter("juego");
       String texto = request.getParameter("texto");
+      System.out.println(user);
+      System.out.println(fecha);
+      System.out.println(spoiler);
+      System.out.println(juego);
+      System.out.println(texto);
       PublicacionVO publicacionVO = new PublicacionVO(user,fecha,Integer.parseInt(juego),texto);
       fachada.anadirPublicacion(publicacionVO);
+
+      System.out.println(fachada.getPublicaciones().size());
       request.getRequestDispatcher("verPerfil.jsp").forward(request, response);
     } catch (Exception e) {
       e.printStackTrace(System.err);

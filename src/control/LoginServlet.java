@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
                 UsuarioVO user = fachada.buscarUsuario(email,pass);
                 fachada.anadirJuegosUser(user);
                 request.setAttribute("user", user);
-                request.getRequestDispatcher("verPerfil.jsp").forward(request, response);
+                request.getRequestDispatcher("Usuario.jsp").forward(request, response);
 
             }
         } catch (SQLException e) {

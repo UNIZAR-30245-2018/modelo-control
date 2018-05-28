@@ -64,7 +64,7 @@ public class WebFacade {
     return existe;
   }
 
-  public void anadirJuegosUser(UsuarioVO user) throws SQLException {
+  public void anadirJuegosEnCursoUser(UsuarioVO user) throws SQLException {
 
     Connection conexion = null;
     try {
@@ -73,8 +73,6 @@ public class WebFacade {
       if (user != null) {
         // throw new SQLException("Problemas con la clave!!!!");
         user.setJuegosEnCurso(usuarioDAO.getEnCursoByUser(user.getSeudonimo(), conexion));
-        user.setJuegosPendientes(usuarioDAO.getPendientesByUser(user.getSeudonimo(), conexion));
-        user.setJuegosCompletados(usuarioDAO.getCompletadosByUser(user.getSeudonimo(), conexion));
       }
     } catch (Exception e) {
       e.printStackTrace(System.err);
@@ -213,30 +211,16 @@ public class WebFacade {
     }
   }
 
-  public void anadirJuegoAUser(UsuarioVO user, int id_juego, String lista) throws SQLException {
+  public void anadirJuegoAUser(UsuarioVO user,String id_juego) throws SQLException {
 
     Connection conexion = null;
     try {
       conexion = GestorDeConexionesBD.getConnection();
       UsuarioDAO usuarioDAO = new UsuarioDAO();
       if (user != null) {
-    	switch (lista) {
-    	case "pendiente": 
-    		usuarioDAO.insertarJuegoPendiente(user, id_juego, conexion);
-    		user.setJuegosPendientes(usuarioDAO.getPendientesByUser(user.getSeudonimo(), conexion));
-    		break;
-      	case "enCurso": 
-      		usuarioDAO.insertarJuegoEnCurso(user, id_juego, conexion);
-      		user.setJuegosEnCurso(usuarioDAO.getEnCursoByUser(user.getSeudonimo(), conexion));
-      		break;
-    	case "Completado": 
-    		usuarioDAO.insertarJuegoCompletado(user, id_juego, conexion);
-    		user.setJuegosCompletados(usuarioDAO.getCompletadosByUser(user.getSeudonimo(), conexion));
-			break;
-    	}
         // throw new SQLException("Problemas con la clave!!!!");
-       
-        
+        usuarioDAO.insertarJuego(user,id_juego,conexion);
+        user.setJuegosEnCurso(usuarioDAO.getEnCursoByUser(user.getSeudonimo(), conexion));
       }
     } catch (Exception e) {
       e.printStackTrace(System.err);

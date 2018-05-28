@@ -167,6 +167,8 @@ public class PublicacionDAO {
       if(ps.executeUpdate() != 1) {
           throw new SQLException("Ha habido problemas a la hora de insertar el usuario");
       }
+
+
     } catch(Exception e){
           System.err.println("Ha habido una excepcion al añadir una publicacion");
     }
