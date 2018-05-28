@@ -44,10 +44,11 @@ public class addJuegoServlet extends HttpServlet {
     } catch (Exception e) {
       e.printStackTrace(System.err);
     }
-    String id = request.getParameter("id");
+    int id = Integer.parseInt(request.getParameter("id"));
+    String lista = request.getParameter("lista");
     try {
       UsuarioVO user = fachada.buscarUsuario(email,password);
-      fachada.anadirJuegoAUser(user,id);
+      fachada.anadirJuegoAUser(user,id, lista);
       RequestDispatcher rd = getServletContext().getRequestDispatcher("/verJuegos.jsp");
       rd.forward(request, response);
     } catch (SQLException e) {
