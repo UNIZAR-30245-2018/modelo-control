@@ -64,7 +64,7 @@ public class WebFacade {
     return existe;
   }
 
-  public void anadirJuegosEnCursoUser(UsuarioVO user) throws SQLException {
+  public void anadirJuegosUser(UsuarioVO user) throws SQLException {
 
     Connection conexion = null;
     try {
@@ -73,6 +73,8 @@ public class WebFacade {
       if (user != null) {
         // throw new SQLException("Problemas con la clave!!!!");
         user.setJuegosEnCurso(usuarioDAO.getEnCursoByUser(user.getSeudonimo(), conexion));
+        user.setJuegosPendientes(usuarioDAO.getPendientesByUser(user.getSeudonimo(), conexion));
+        user.setJuegosCompletados(usuarioDAO.getCompletadosByUser(user.getSeudonimo(), conexion));
       }
     } catch (Exception e) {
       e.printStackTrace(System.err);

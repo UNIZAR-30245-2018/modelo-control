@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(cookiee);
                 response.addCookie(cookiep);
                 UsuarioVO user = fachada.buscarUsuario(email,pass);
-                fachada.anadirJuegosEnCursoUser(user);
+                fachada.anadirJuegosUser(user);
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("verPerfil.jsp").forward(request, response);
 
