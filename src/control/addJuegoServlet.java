@@ -23,7 +23,6 @@ public class addJuegoServlet extends HttpServlet {
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    System.out.println("Aqui estoy");
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     WebFacade fachada = new WebFacade();
@@ -45,9 +44,19 @@ public class addJuegoServlet extends HttpServlet {
       e.printStackTrace(System.err);
     }
     String id = request.getParameter("id");
+    String lista = request.getParameter("lista");
+    System.out.println(lista);
     try {
       UsuarioVO user = fachada.buscarUsuario(email,password);
-      fachada.anadirJuegoAUser(user,id);
+      if(lista.equals("enCurso")){
+        fachada.anadirJuegoEnCursoAUser(user,id);
+      }
+      else if(lista.equals("completado")){
+        fachada.anadirJuegoCompletadoAUser(user,id);
+      }
+      else{
+        fachada.anadirJuegoPendienteAUser(user,id);
+      }
       RequestDispatcher rd = getServletContext().getRequestDispatcher("/verJuegos.jsp");
       rd.forward(request, response);
     } catch (SQLException e) {

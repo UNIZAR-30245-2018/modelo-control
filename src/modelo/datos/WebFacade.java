@@ -1,6 +1,6 @@
 /**
-* 
-*/
+ *
+ */
 package modelo.datos;
 
 import java.sql.Connection;
@@ -89,11 +89,11 @@ public class WebFacade {
       conexion = GestorDeConexionesBD.getConnection();
       UsuarioDAO usuarioDAO = new UsuarioDAO();
       if (usuarioDAO.existeUsuarioEmail(email, pass, conexion)) {
-    	  devolver = usuarioDAO.getUsuarioEmail(email, conexion);
+        devolver = usuarioDAO.getUsuarioEmail(email, conexion);
       } else if (usuarioDAO.existeUsuarioSeudonimo(email, pass, conexion)) {
-    	  devolver = usuarioDAO.getUsuario(email, conexion);
+        devolver = usuarioDAO.getUsuario(email, conexion);
       } else {
-    	  devolver = null;
+        devolver = null;
       }
     } catch (Exception e) {
       e.printStackTrace(System.err);
@@ -118,26 +118,26 @@ public class WebFacade {
     return devolver;
 
   }
-  
-  public String getEmail(String identificacion) throws java.sql.SQLException {
-	    Connection conexion = null;
-	    String devolver = null;
-	    try {
-	      conexion = GestorDeConexionesBD.getConnection();
-	      UsuarioDAO usuarioDAO = new UsuarioDAO();
-	      if (usuarioDAO.existeEmail(identificacion, conexion)) {
-	    	  devolver = identificacion;
-	      } else {
-	    	  devolver = usuarioDAO.getEmail(identificacion, conexion);
-	      }
-	    } catch (Exception e) {
-	      e.printStackTrace(System.err);
-	    } finally {
-	      conexion.close();
-	    }
-	    return devolver;
 
-	  }
+  public String getEmail(String identificacion) throws java.sql.SQLException {
+    Connection conexion = null;
+    String devolver = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      if (usuarioDAO.existeEmail(identificacion, conexion)) {
+        devolver = identificacion;
+      } else {
+        devolver = usuarioDAO.getEmail(identificacion, conexion);
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return devolver;
+
+  }
 
   public ArrayList<LogroVO> getLogros() throws java.sql.SQLException {
     Connection conexion = null;
@@ -198,6 +198,7 @@ public class WebFacade {
     }
     return devolver;
   }
+
   public void anadirPublicacion(PublicacionVO pub) throws java.sql.SQLException {
     Connection conexion = null;
     try {
@@ -211,7 +212,7 @@ public class WebFacade {
     }
   }
 
-  public void anadirJuegoAUser(UsuarioVO user,String id_juego) throws SQLException {
+  public void anadirJuegoPendienteAUser(UsuarioVO user,String id_juego) throws SQLException {
 
     Connection conexion = null;
     try {
@@ -219,7 +220,45 @@ public class WebFacade {
       UsuarioDAO usuarioDAO = new UsuarioDAO();
       if (user != null) {
         // throw new SQLException("Problemas con la clave!!!!");
-        usuarioDAO.insertarJuego(user,id_juego,conexion);
+        usuarioDAO.insertarJuegoPendiente(user,id_juego,conexion);
+        user.setJuegosPendientes(usuarioDAO.getPendientesByUser(user.getSeudonimo(), conexion));
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+
+  }
+
+  public void anadirJuegoCompletadoAUser(UsuarioVO user,String id_juego) throws SQLException {
+
+    Connection conexion = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      if (user != null) {
+        // throw new SQLException("Problemas con la clave!!!!");
+        usuarioDAO.insertarJuegoCompletado(user,id_juego,conexion);
+        user.setJuegosCompletados(usuarioDAO.getCompletosByUser(user.getSeudonimo(), conexion));
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+
+  }
+
+  public void anadirJuegoEnCursoAUser(UsuarioVO user,String id_juego) throws SQLException {
+
+    Connection conexion = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      if (user != null) {
+        // throw new SQLException("Problemas con la clave!!!!");
+        usuarioDAO.insertarJuegoEnCurso(user,id_juego,conexion);
         user.setJuegosEnCurso(usuarioDAO.getEnCursoByUser(user.getSeudonimo(), conexion));
       }
     } catch (Exception e) {
@@ -229,6 +268,62 @@ public class WebFacade {
     }
 
   }
+
+  public ArrayList<JuegoVO> getJuegosCompletadosDeUser(UsuarioVO user) throws SQLException {
+
+    Connection conexion = null;
+    ArrayList<JuegoVO> res = new ArrayList<>();
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      if (user != null) {
+        // throw new SQLException("Problemas con la clave!!!!");
+        res = usuarioDAO.getCompletosByUser(user.getSeudonimo(),conexion);
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return res;
+  }
+
+  public ArrayList<JuegoVO> getJuegosEnCursoDeUser(UsuarioVO user) throws SQLException {
+
+    Connection conexion = null;
+    ArrayList<JuegoVO> res = new ArrayList<>();
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      if (user != null) {
+        res = usuarioDAO.getEnCursoByUser(user.getSeudonimo(),conexion);
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return res;
+  }
+
+  public ArrayList<JuegoVO> getJuegosPendientesDeUser(UsuarioVO user) throws SQLException {
+
+    Connection conexion = null;
+    ArrayList<JuegoVO> res = new ArrayList<>();
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      if (user != null) {
+        res = usuarioDAO.getPendientesByUser(user.getSeudonimo(),conexion);
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return res;
+  }
+
 
   public static void main(String[] args) throws SQLException {
 
