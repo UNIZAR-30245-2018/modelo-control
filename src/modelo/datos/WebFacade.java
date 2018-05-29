@@ -11,11 +11,13 @@ import modelo.datos.DAO.JuegoDAO;
 import modelo.datos.DAO.ListaJuegosDAO;
 import modelo.datos.DAO.LogroDAO;
 import modelo.datos.DAO.PublicacionDAO;
+import modelo.datos.DAO.SeguidorDAO;
 import modelo.datos.DAO.UsuarioDAO;
 import modelo.datos.VO.JuegoVO;
 import modelo.datos.VO.ListaJuegosVO;
 import modelo.datos.VO.LogroVO;
 import modelo.datos.VO.PublicacionVO;
+import modelo.datos.VO.SeguidorVO;
 import modelo.datos.VO.UsuarioVO;
 
 /**
@@ -169,6 +171,21 @@ public class WebFacade {
     return devolver;
   }
 
+  public ArrayList<UsuarioVO> getUsers() throws java.sql.SQLException {
+    Connection conexion = null;
+    ArrayList<UsuarioVO> devolver = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      devolver = usuarioDAO.getAllUsuario(conexion);
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return devolver;
+  }
+
   public ArrayList<PublicacionVO> getPublicaciones() throws java.sql.SQLException {
     Connection conexion = null;
     ArrayList<PublicacionVO> devolver = null;
@@ -191,6 +208,28 @@ public class WebFacade {
       conexion = GestorDeConexionesBD.getConnection();
       PublicacionDAO publicacionDAO = new PublicacionDAO();
       devolver = publicacionDAO.getPublicacionOfAnUser(user,conexion);
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return devolver;
+  }
+
+  public ArrayList<PublicacionVO> getPublicacionesOfSeguidos(String user) throws java.sql.SQLException {
+    Connection conexion = null;
+    ArrayList<PublicacionVO> devolver = new ArrayList<>();
+    ArrayList<SeguidorVO> seguidos;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      PublicacionDAO publicacionDAO = new PublicacionDAO();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      seguidos =  usuarioDAO.getSeguidos(user,conexion);
+      System.out.println(seguidos.size());
+      for(SeguidorVO seguido : seguidos){
+        System.out.println("Sacamos de: " + seguido.getUsuario_seguido());
+        devolver.addAll(publicacionDAO.getPublicacionOfAnUser(seguido.getUsuario_seguido(),conexion));
+      }
     } catch (Exception e) {
       e.printStackTrace(System.err);
     } finally {
@@ -322,6 +361,94 @@ public class WebFacade {
       conexion.close();
     }
     return res;
+  }
+
+  public boolean userSigue(UsuarioVO user,UsuarioVO sigue) throws SQLException {
+
+    Connection conexion = null;
+    boolean res = false;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      if (user != null && sigue != null) {
+        res = usuarioDAO.sonSeguidores(user,sigue,conexion);
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return res;
+  }
+
+  public void seguirUsuario(UsuarioVO user,UsuarioVO sigue) throws SQLException{
+    Connection conexion = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      SeguidorDAO seguidorDAO = new SeguidorDAO();
+      if (user != null && sigue != null) {
+        seguidorDAO.addSeguidor(user,sigue,conexion);
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+
+
+  }
+
+  public void dejarDeSeguirUsuario(UsuarioVO user,UsuarioVO sigue) throws SQLException{
+    Connection conexion = null;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      SeguidorDAO seguidorDAO = new SeguidorDAO();
+      if (user != null && sigue != null) {
+        seguidorDAO.deleteSeguidor(user,sigue,conexion);
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+
+
+  }
+
+  public int numeroSeguidores(UsuarioVO user) throws SQLException{
+    Connection conexion = null;
+    int numero = 0;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      SeguidorDAO seguidorDAO = new SeguidorDAO();
+      if (user != null) {
+        numero = seguidorDAO.getListaSeguidores(user.getSeudonimo(),conexion).size();
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return numero;
+
+  }
+
+  public int numeroSeguidos(UsuarioVO user) throws SQLException{
+    Connection conexion = null;
+    int numero = 0;
+    try {
+      conexion = GestorDeConexionesBD.getConnection();
+      SeguidorDAO seguidorDAO = new SeguidorDAO();
+      if (user != null) {
+        numero = seguidorDAO.getListaSeguidos(user.getSeudonimo(),conexion).size();
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    } finally {
+      conexion.close();
+    }
+    return numero;
+
   }
 
 

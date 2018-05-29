@@ -7,9 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import modelo.datos.VO.JuegoVO;
+import modelo.datos.VO.SeguidorVO;
 import modelo.datos.VO.UsuarioVO;
 
 /**
@@ -513,5 +515,53 @@ public class UsuarioDAO {
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
+	}
+
+	public boolean sonSeguidores(UsuarioVO usuario, UsuarioVO sigue,Connection conexion) {
+		boolean res = false;
+		try {
+			String query = "SELECT * FROM  seguidor WHERE usuario = ? AND usuario_seguido = ?";
+
+			PreparedStatement ps = conexion.prepareStatement(query);
+
+			ps.setString(1, usuario.getSeudonimo());
+			ps.setString(2, sigue.getSeudonimo());
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.first()) {
+				res = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+		return res;
+	}
+
+	public ArrayList<SeguidorVO> getSeguidos(String usuario,Connection conexion) {
+		ArrayList<SeguidorVO> retVal = new ArrayList<>();
+		try {
+			String query = "SELECT * FROM seguidor WHERE usuario = ?";
+
+			PreparedStatement ps = conexion.prepareStatement(query);
+
+			ps.setString(1, usuario);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.first()) {
+				do{
+					String user = rs.getString("usuario");
+					String userSeguido = rs.getString("usuario_seguido");
+					LocalDate fecha = rs.getDate("fecha").toLocalDate();
+					retVal.add(new SeguidorVO(user,userSeguido,fecha));}
+				while (rs.next());
+			}
+			else{
+				System.out.println("No se ha encontrado ningun seguidoo");
+			}
+	} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return retVal;
 	}
 }
